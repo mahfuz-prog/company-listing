@@ -1,4 +1,4 @@
-# Company & Blog Listing Platform
+# Company Listing Webapp
 
 ## Overview
 
