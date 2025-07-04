@@ -1,0 +1,100 @@
+/*====================================*/
+html,
+body {
+  height: 100%;
+}
+
+.form-signin {
+  max-width: 400px;
+  padding: 3rem;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+
+.bi-twitter-x,
+.bi-github {
+  color: #ffffff;
+}
+
+.sign-up-form {
+  background-color: #343A40;
+}
+
+@media only screen and (max-width: 390px) {
+  .form-signin {
+    max-width: 370px;
+    padding: 2rem;
+  }
+}
+
+.form-input-color:checked {
+  background-color: #31d2f2;
+   !important;
+  color: #333;
+   !important;
+}
+
+
+/*start flash popup*/
+
+.popup {
+  position: fixed;
+  bottom: 10px;
+  /* Position at bottom of the page */
+  left: 50%;
+  transform: translateX(-50%);
+  /* Center horizontally */
+  padding: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+  z-index: 50;
+}
+
+.hidden-important {
+  display: none !important;
+}
+
+
+@media only screen and (max-width: 400px) {
+  #myPopup {
+    width: 95%;
+  }
+
+  .mobile-width {
+    width: 90%;
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+  #myPopup {
+    width: 95%;
+  }
+
+}
+
+/*end flash popup*/
+
+
+/*errors page start*/
+.error-heading {
+  font-size: 150px !important;
+  font-style: italic;
+  font-weight: 900;
+}
+
+/*errors page end*/

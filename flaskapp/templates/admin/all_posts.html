@@ -1,0 +1,13 @@
+{% extends 'admin/admin.html' %}
+{% block body_block %}
+{% for post in posts %}
+<div class="border rounded-3 px-2 py-2 mb-2">
+  {{post.title}}
+  <br>
+  <i>{{post.author.username}}</i>
+  <br>
+  <a class="btn btn-info mt-1" href="{{ url_for('admin.delete_post', id=post.id) }}">delete</a>
+  <a class="btn btn-info mt-1" href="{{ url_for('admin.edit_post', id=post.id) }}">Edit</a>
+</div>
+{% endfor %}
+{% endblock body_block %}

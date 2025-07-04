@@ -1,0 +1,29 @@
+activate.bat
+tests/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+env/
+venv/
+*.env
+.venv/
+.ipynb_checkpoints/
+.pytest_cache/
+.coverage
+.mypy_cache/
+.ruff_cache/
+
+# Configuration files
+*.ini
+*.cfg
+
+# Logs
+*.log
+logs/
+tmp/
+
+# Other temporary files
+*.swp
+*~

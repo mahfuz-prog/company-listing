@@ -1,0 +1,68 @@
+{% from 'templates.html' import single_field %}
+{% extends 'layout.html' %}
+{% block body_block %}
+<div class="px-5 py-5 bg-dark rounded hero-section mb-5">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5 inner-hero">
+    <div class="col-10 col-sm-12 col-lg-6 d-flex justify-content-center hero-img">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d228.23995469735476!2d90.43111046745787!3d23.753110225079464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b872d290380b%3A0x38613f8c1e3aef0d!2sNobinbag%2C%20Titas%20Gas%20Rd%2C%20Dhaka%201219!5e0!3m2!1sen!2sbd!4v1716150105589!5m2!1sen!2sbd" width="600" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="col-lg-6 hero-text">
+      <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3 text-light">Find Us</h1>
+      <ul class="list-unstyled">
+        <li class="mb-3">
+          <a href="mailto:webwaymark@gmail.com" class="text-decoration-none">
+            <span class="d-flex align-items-center text-dark-emphasis bg-dark-subtle">
+              <img class="" width="22" height="22" src="{{ url_for('static', filename='/images/mail-webwaymark.png') }}" alt="email webwaymark">
+              <span class="px-3 text-info">webwaymark@gmail.com</span>
+            </span>
+          </a>
+        </li>
+        <li class="mb-3">
+          <a href="tel:+8801744610996" class="text-decoration-none">
+            <span class="d-flex align-items-center text-dark-emphasis bg-dark-subtle">
+              <img class="" width="22" height="22" src="{{ url_for('static', filename='/images/phone-webwaymark.png') }}" alt="phone webwaymark">
+              <span class="px-3 text-info">+88017---109--</span>
+            </span>
+          </a>
+        </li>
+        <li class="mb-3">
+          <span class="d-flex align-items-center text-dark-emphasis bg-dark-subtle">
+            <img class="" width="22" height="22" src="{{ url_for('static', filename='/images/location.png') }}" alt="location webwaymark">
+            <span class="px-3 text-info">Dhaka, Bangladesh</span>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="bg-dark p-5 rounded mb-5 contact-section">
+  <h2 class="text-light">Get in touch</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="d-flex gap-4 contact-form">
+      <div class="form-floating mb-2 w-50 contact-field">
+        {{ single_field(form.name, placeholder=form.name.label.text) }}
+        <label for="floatingInput">{{form.name.label.text}}</label>
+      </div>
+      <div class="form-floating mb-2 w-50 contact-field">
+        {{ single_field(form.email, placeholder=form.email.label.text) }}
+        <label for="floatingInput">{{form.email.label.text}}</label>
+      </div>
+    </div>
+    <div class="form-floating mb-2">
+      {{ single_field(form.subject, placeholder=form.subject.label.text) }}
+      <label for="floatingInput">{{form.subject.label.text}}</label>
+    </div>
+    <div class="mb-2">
+      <label class="form-label text-light">{{form.description.label.text}}</label>
+      {{ form.description(class='w-100 rounded-3', rows='5') }}
+      <ul>
+        {% for error in form.description.errors %}
+        <li style="color: red; margin-left: -10px; padding-top: 4px;">{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {{ form.submit(class="btn btn-outline-info rounded-3 mb-3") }}
+  </form>
+</div>
+{% endblock %}

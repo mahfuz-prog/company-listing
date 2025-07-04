@@ -1,0 +1,67 @@
+{% from 'templates.html' import single_field %}
+{% extends 'admin/admin.html' %}
+{% block body_block %}
+<img src="{{ url_for('static', filename='post_images/' + post.featured_image) }}" width="30%" class="rounded">
+<hr>
+<form method="POST" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <div>
+    <ul class="list-inline">
+      <li class="list-inline-item" style="padding-right: 5px;">
+        <h5>Post categories: </h5>
+      </li>
+      {% for category in post_categories %}
+      <li class="list-inline-item" style="padding-right: 5px;">
+        <input class="form-check-input" type="checkbox" name="remove_category" value="{{category}}" id="{{category}}" checked>
+        <label class="form-check-label" for="{{category}}">{{category }}</label>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div>
+    <ul class="list-inline">
+      <li class="list-inline-item" style="padding-right: 5px;">
+        <h5>Assign categories:</h5>
+      </li>
+      {% for category in all_categories %}
+      <li class="list-inline-item" style="padding-right: 5px;">
+        <input class="form-check-input" type="checkbox" name="add_category" value="{{category}}" id="{{category}}">
+        <label class="form-check-label" for="{{category}}">{{category }}</label>
+      </li>
+      {% endfor %}
+    </ul>
+    <ul>
+      {% for error in form.add_category.errors %}
+      <li style="color: red; margin-left: -10px; padding-top: 4px;">{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="mb-2">
+    {{ form.featured_img.label() }}
+    {{ form.featured_img(class="form-control", type="file") }}
+    <ul>
+      {% for error in form.featured_img.errors %}
+      <li style="color:red;">{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="form-floating mb-2">
+    {{ single_field(form.title, placeholder=form.title.label.text) }}
+    <label for="floatingInput">{{form.title.label.text}}</label>
+  </div>
+  <div class="form-floating mb-2">
+    {{ single_field(form.excerpt, placeholder=form.excerpt.label.text) }}
+    <label for="floatingInput">{{form.excerpt.label.text}}</label>
+  </div>
+  <div class="mb-2">
+    <label class="form-label text-light">{{form.description.label.text}}</label>
+    {{ form.description(class='w-100 rounded-3', rows='10') }}
+    <ul>
+      {% for error in form.description.errors %}
+      <li style="color: red; margin-left: -10px; padding-top: 4px;">{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {{ form.submit(class="btn rounded-3 btn-info text-dark mb-3") }}
+</form>
+{% endblock body_block %}

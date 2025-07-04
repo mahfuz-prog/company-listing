@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+{% block body_block %}
+<div class="px-5 py-5 bg-dark rounded mb-4 hero-section">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5 inner-hero">
+    <div class="col-10 col-sm-12 col-lg-6 d-flex justify-content-center hero-img">
+      <img src="{{ featured.featured_image }}" width="100%" class="rounded" alt="blog-webwaymark">
+    </div>
+    <div class="col-lg-6 hero-text">
+      <h1 class="display-5 fst-italic text-body-emphasis lh-1 mb-3 text-light">{{ featured.title }}</h1>
+      <p class="lead text-light">{{ featured.excerpt }}</p>
+      <p class="lead mb-0 text-light"><a href="{{ url_for('posts.read_featured') }}" class="text-body-emphasis text-info">Continue reading...</a></p>
+    </div>
+  </div>
+</div>
+<div class="mb-5"></div>
+<div class="row g-5 mb-4 single-post-page d-flex flex-wrap">
+  <div class="col-md-4 single post-page-sidebar post-page-right">
+    <div class="position-sticky bg-dark rounded post-top-sticky" style="top: 6rem;">
+      <div class="p-4 bg-body-tertiary rounded">
+        <h4 class="fst-italic text-light">Blog posts</h4>
+        <p class="mb-0 text-light">Find the blog posts for different niche from the best passionate writer of WebWaymark.</p>
+      </div>
+      <div class='px-4 pb-2'>
+        <h4 class="fst-italic text-light border-bottom py-1">Niches</h4>
+        <ul class="px-3">
+          {% for category in cateories %}
+          <a href="{{url_for('posts.post_category_view', category=category.category_name)}}" class="text-light">
+            <li class="text-light">{{ category.category_name.replace('-', ' ').capitalize() }}</li>
+          </a>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8 single-post-page-content post-page-left">
+    <div class="album bg-body-tertiary">
+      <h2 class="pb-2">{{ title }}</h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3 lll">
+        {% for post in posts %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <a href="{{url_for('posts.read_post', title=post.title)}}" class="text-decoration-none text-dark">
+              <img src="{{ url_for('static', filename='post_images/' + post.featured_image) }}" width="100%" class="rounded">
+              <div class="card-body">
+                <h3>{{ post.title.replace('-', ' ').capitalize() }}</h3>
+                <p class="card-text mb-4">{{ post.excerpt[0:100] }}<span class="read-more">{{post.excerpt[100:125]}}</span></p>
+            </a>
+            <hr>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="align-items-center">
+                {% for category in post.categories %}
+                <a href="{{url_for('posts.post_category_view', category=category)}}">
+                  <button type="button" class="btn btn-info btn-sm rounded-pill">{{ category.replace('-', ' ').capitalize() }}</button></a>
+                <span class="px-1"></span>
+                {% endfor %}
+              </div>
+              <small class="text-body-secondary">Date: {{ post.date_posted.strftime('%d-%b, %Y') }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>
+{% endblock body_block %}

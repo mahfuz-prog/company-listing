@@ -1,0 +1,12 @@
+{% extends 'users/form-layout.html' %}
+{% block full_block %}
+<main class="w-100 m-auto">
+  <h1 class="display-5 text-info error-heading text-center">4<span class="text-white">0</span>3</h1>
+  <h3 class="text-white text-center">Forbidden response</h3>
+  <div class="d-flex justify-content-center mt-3">
+    <a href="{{ url_for('main.home') }}">
+      <button class="btn btn-info border-0 rounded-pill btn-lg" type="button">Back to homepage</button>
+    </a>
+  </div>
+</main>
+{% endblock full_block %}

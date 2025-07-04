@@ -1,0 +1,69 @@
+{% from 'templates.html' import single_field %}
+{% extends 'admin/admin.html' %}
+{% block body_block %}
+<form method="POST" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <div class="d-flex gap-5">
+    <div class="col-md-9">
+      <div class="mb-2">
+        {{ form.logo.label() }}
+        {{ form.logo(class="form-control", type="file") }}
+        <ul>
+          {% for error in form.logo.errors %}
+          <li style="color:red;">{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="form-floating mb-2">
+        {{ single_field(form.company_name, placeholder=form.company_name.label.text) }}
+        <label for="floatingInput">{{form.company_name.label.text}}</label>
+      </div>
+      <div class="form-floating mb-2">
+        {{ single_field(form.services, placeholder=form.services.label.text) }}
+        <label for="floatingInput">{{form.services.label.text}}</label>
+      </div>
+      <div class="form-floating mb-2">
+        {{ single_field(form.locations, placeholder=form.locations.label.text) }}
+        <label for="floatingInput">{{form.locations.label.text}}</label>
+      </div>
+      <div class="form-floating mb-2">
+        {{ single_field(form.social_links, placeholder=form.social_links.label.text) }}
+        <label for="floatingInput">{{form.social_links.label.text}}</label>
+      </div>
+      <div class="form-floating mb-2">
+        {{ single_field(form.company_website, placeholder=form.company_website.label.text) }}
+        <label for="floatingInput">{{form.company_website.label.text}}</label>
+      </div>
+      <div class="form-floating mb-2">
+        {{ single_field(form.headquarter, placeholder=form.headquarter.label.text) }}
+        <label for="floatingInput">{{form.headquarter.label.text}}</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <h3>Category</h3>
+      <div class="form-check">
+        {% for category in categories %}
+        <input class="form-check-input" type="checkbox" name="option" value="{{category}}" id="{{category}}">
+        <label class="form-check-label" for="{{category}}">{{category}}</label>
+        <br>
+        {% endfor %}
+        <ul>
+          {% for error in form.option.errors %}
+          <li style="color: red; margin-left: -10px; padding-top: 4px;">{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="mb-2">
+    <label class="form-label text-dark">{{form.description.label.text}}</label>
+    {{ form.description(class='w-100 rounded-3', rows='5') }}
+    <ul>
+      {% for error in form.description.errors %}
+      <li style="color: red; margin-left: -10px; padding-top: 4px;">{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {{ form.submit(class="btn rounded-3 btn-info text-dark mb-3") }}
+</form>
+{% endblock body_block %}

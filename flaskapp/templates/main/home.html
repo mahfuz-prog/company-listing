@@ -1,0 +1,202 @@
+{% extends 'layout.html' %}
+{% block full_block %}
+<div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="3000">
+      <img src="{{ url_for('static', filename='images/services-webwaymark.webp')}}" class="slide-img" alt="Services by WebWaymark">
+      <div class="container">
+        <div class="carousel-caption">
+          <h1 class="display-4">Find the best company for your business</h1>
+          <p>Access a vast pool of professional companies. WebWaymark connects you with companies offering diverse services to fit your business needs.</p>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="2800">
+      <img src="{{ url_for('static', filename='images/job-webwaymark.webp')}}" class="slide-img" alt="Jobs by WebWaymark">
+      <div class="container">
+        <div class="carousel-caption">
+          <h1 class="display-4">Find your dream job from our 36k+ listing</h1>
+          <p>Search through 36k+ companies across various industries and locations. Discover exciting career opportunities and connect with potential employers.</p>
+          <span class="px-2 mobile-hide"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+{% endblock full_block %}
+{% block body_block %}
+<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="x-lg" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" />
+    <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" />
+  </symbol>
+</svg>
+<div class="px-5 py-5 bg-dark rounded hero-section">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5 inner-hero">
+    <div class="col-10 col-sm-12 col-lg-6 d-flex justify-content-center hero-img">
+      <img src="{{ url_for('static', filename='images/benifits-webwaymark.jpg') }}" width="100%" class="rounded" alt="Benefits of WebWaymark">
+    </div>
+    <div class="col-lg-6 hero-text">
+      <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3 text-light">Benefits</h1>
+      <p class="lead text-light">We have accumulated the world's leading real existing companies from different industries into a single platform. Getting the best services or finding a job is simple through WebWaymark.</p>
+      <div class="gap-2 justify-content-md-start">
+        <a href="{{ url_for('companies.services', category='software-development') }} "><button type="button" class="btn btn-outline-info px-4 me-md-2">Companies</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="home-tab-content pb-5 mt-5">
+  <h2 class="display-5 fw-bold text-center">Industries</h2>
+  <div class="container px-4 mt-4" id="featured-1">
+    <h3 class="mb-2 text-center">IT Services & IT Consulting Companies</h3>
+    <div class="border-bottom"></div>
+    <div class="row g-2 py-1 row-cols-1 row-cols-lg-3 tab-item pt-3">
+      <div class="feature col">
+        <div class="d-flex flex-column flex-md-row gap-4">
+          <div class="list-group spacing w-100">
+            <a href="{{ url_for('companies.services', category='web-development') }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+              <img src="{{ url_for('static', filename='images/web-development-webwaymark.png') }}" alt="web-development-webwaymark" width="40" height="40" class="flex-shrink-0">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h5 class="mb-0">Web Development</h5>
+                  <p class="mb-0 opacity-75">Total {{ data.web_development }} results found!</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row gap-4 mt-2">
+          <div class="list-group spacing w-100">
+            <a href="{{ url_for('companies.services', category='big-data-and-bi') }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+              <img src="{{ url_for('static', filename='images/data-analysis-webwaymark.png') }}" alt="data-analysis-webwaymark" width="40" height="40" class="flex-shrink-0">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h5 class="mb-0">Data Science</h5>
+                  <p class="mb-0 opacity-75">Total {{data.data_science}} results found!</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row gap-4 mt-2">
+          <div class="list-group spacing w-100">
+            <a href="{{ url_for('companies.services', category='game-development') }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+              <img src="{{ url_for('static', filename='images/game-development-webwaymark.png') }}" alt="game-development-webwaymark" width="40" height="40" class="flex-shrink-0">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h5 class="mb-0">Game Development</h5>
+                  <p class="mb-0 opacity-75">Total {{data.game_development}} results found!</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="feature col">
+        <div class="d-flex flex-column flex-md-row gap-4">
+          <div class="list-group spacing w-100">
+            <a href="{{ url_for('companies.services', category='animation-and-multimedia') }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+              <img src="{{ url_for('static', filename='images/animate-webwaymark.png') }}" alt="animation-webwaymark" width="40" height="40" class="flex-shrink-0">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h5 class="mb-0">Animation</h5>
+                  <p class="mb-0 opacity-75">Total {{data.animation}} results found!</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row gap-4 mt-2">
+          <div class="list-group spacing w-100">
+            <a href="{{ url_for('companies.services', category='blockchain-technology') }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+              <img src="{{ url_for('static', filename='images/blockchain-development-webwaymark.png') }}" alt="blockchain-development-webwaymark" width="40" height="40" class="flex-shrink-0">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h5 class="mb-0">Blockchain</h5>
+                  <p class="mb-0 opacity-75">Total {{data.blockchain}} results found!</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row gap-4 mt-2">
+          <div class="list-group spacing w-100">
+            <a href="{{ url_for('companies.services', category='digital-marketing') }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+              <img src="{{ url_for('static', filename='images/digital-marketing-webwaymark.png') }}" alt="digital-marketing-webwaymark" width="40" height="40" class="flex-shrink-0">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h5 class="mb-0">Digital Marketing</h5>
+                  <p class="mb-0 opacity-75">Total {{data.digital_marketing}} results found!</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="feature col">
+        <div class="d-flex flex-column flex-md-row gap-4">
+          <div class="list-group spacing w-100">
+            <a href="{{ url_for('companies.services', category='software-development') }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+              <img src="{{ url_for('static', filename='images/software-development-webwaymark.png') }}" alt="software-development-webwaymark" width="40" height="40" class="flex-shrink-0">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h5 class="mb-0">Software development</h5>
+                  <p class="mb-0 opacity-75">Total {{data.software_development}} results found!</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row gap-4 mt-2">
+          <div class="list-group spacing w-100">
+            <a href="{{ url_for('companies.services', category='artificial-intelligence') }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+              <img src="{{ url_for('static', filename='images/artificial-intelligence-webwaymark.png') }}" alt="artificial-intelligence-webwaymark" width="40" height="40" class="flex-shrink-0">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h5 class="mb-0">Artificial intelligence</h5>
+                  <p class="mb-0 opacity-75">Total {{data.ai}} results found!</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row gap-4 mt-2">
+          <div class="list-group spacing w-100">
+            <a href="{{ url_for('companies.services', category='web-designing-ui-ux') }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+              <img src="{{ url_for('static', filename='images/ui-ux-webwaymark.png') }}" alt="ui-ux-webwaymark" width="40" height="40" class="flex-shrink-0">
+              <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                  <h5 class="mb-0">UI/UX</h5>
+                  <p class="mb-0 opacity-75">Total {{data.ui}} results found!</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="px-5 py-5 d-flex flex-wrap justify-content-between align-items-center bg-dark rounded mb-5">
+  <div class="col-md-6 d-flex align-items-center home-contact-left">
+    <h3 class="fw-bold text-body-emphasis lh-1 mb-0 text-light">If you have any query, let us know.</h3>
+  </div>
+  <div class="nav col-md-4 justify-content-end d-flex home-contact-right">
+    <a href="{{ url_for('main.contact_us') }}">
+      <button type="button" class="btn btn-outline-info px-4 me-md-2">Contact us</button>
+    </a>
+  </div>
+</div>
+{% endblock %}

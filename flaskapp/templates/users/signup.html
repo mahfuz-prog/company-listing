@@ -1,0 +1,30 @@
+{% from 'templates.html' import single_field %}
+{% extends 'users/form-layout.html' %}
+{% block full_block %}
+<main class="form-signin w-100 m-auto bg-dark rounded-3">
+  <form class="" method="POST">
+    {{ form.hidden_tag() }}
+    <a href="{{ url_for('main.home') }}"><img src="{{ url_for('static', filename='images/WebWaymark-white.png') }}" width="225" height="45" class="mb-4"></a>
+    <div class="form-floating mb-2">
+      {{ single_field(form.username, placeholder=form.username.label.text) }}
+      <label for="floatingInput">{{form.username.label.text}}</label>
+    </div>
+    <div class="form-floating mb-2">
+      {{ single_field(form.email, placeholder=form.email.label.text) }}
+      <label for="floatingInput">{{form.email.label.text}}</label>
+    </div>
+    <div class="form-floating mb-2">
+      {{ single_field(form.password, placeholder=form.password.label.text) }}
+      <label for="floatingInput">{{form.password.label.text}}</label>
+    </div>
+    <div class="form-floating mb-2">
+      {{ single_field(form.confirm_password, placeholder=form.confirm_password.label.text) }}
+      <label for="floatingInput">{{form.confirm_password.label.text}}</label>
+    </div>
+    {{ form.submit(class="w-100 mb-2 btn btn-lg rounded-3 btn-info text-dark") }}
+    <small class="text-body-secondary text-light">By clicking Create account, you agree to the<a href="#" class="text-info"> terms of use</a></small>
+    <hr class="my-4 text-light">
+    <span class="text-light">Already have an account? <a href="{{url_for('users.sign_in')}}" class="text-info">Login</a></span>
+  </form>
+</main>
+{% endblock full_block %}

@@ -1,0 +1,32 @@
+{% from 'templates.html' import single_field %}
+{% extends 'admin/admin.html' %}
+{% block body_block %}
+<ul class="list-inline">
+  <li class="list-inline-item" style="padding-right: 5px;">
+    <h5>All categories:</h5>
+  </li>
+  {% for category in categories %}
+  <li class="list-inline-item" style="padding-right: 5px;"><svg width="11" height="11" style="margin-right: 5px;">
+      <use xlink:href="#circle-icon"></use>
+    </svg>{{ category.category_name }}</li>
+  {% endfor %}
+</ul>
+<h3>Add new category</h3>
+<form method="POST">
+  {{ form_add.hidden_tag() }}
+  <div class="form-floating mb-2">
+    {{ single_field(form_add.category_name, placeholder=form_add.category_name.label.text) }}
+    <label for="floatingInput">{{form_add.category_name.label.text}}</label>
+  </div>
+  {{ form_add.submit_add(class="btn rounded-3 btn-info text-dark mb-3") }}
+</form>
+<h3 class="mt-3">Delete category</h3>
+<form method="POST">
+  {{ form_delete.hidden_tag() }}
+  <div class="form-floating mb-2">
+    {{ single_field(form_delete.category_name, placeholder=form_delete.category_name.label.text) }}
+    <label for="floatingInput">{{form_delete.category_name.label.text}}</label>
+  </div>
+  {{ form_delete.submit_delete(class="btn rounded-3 btn-info text-dark mb-3") }}
+</form>
+{% endblock body_block %}

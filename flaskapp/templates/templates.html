@@ -1,0 +1,8 @@
+{% macro single_field(field) %}
+{{ field(class='form-control rounded-3', **kwargs)|safe }}
+<ul>
+  {% for error in field.errors %}
+  <li style="color: red; margin-left: -10px; padding-top: 4px;">{{ error }}</li>
+  {% endfor %}
+</ul>
+{% endmacro %}
