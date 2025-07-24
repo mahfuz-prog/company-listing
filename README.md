@@ -1,5 +1,8 @@
 # Company Listing Webapp
 
+## High-Level Architecture
+<img width="900" height="662" alt="Architecture" src="https://github.com/user-attachments/assets/e35c0dac-d4b4-4671-b587-2c539ba3478e" />
+
 ## Overview
 
 This is a full-fledged web application built with Flask that serves as a comprehensive directory for companies and a platform for blog posts. It showcases a complete data pipeline, from web scraping and data processing to a robust backend and a dynamic frontend. This project highlights skills in web scraping, data processing, and full-stack web development with Python and Flask.
