@@ -12,7 +12,7 @@
       </li>
       {% for category in post_categories %}
       <li class="list-inline-item" style="padding-right: 5px;">
-        <input class="form-check-input" type="checkbox" name="remove_category" value="{{category}}" id="{{category}}" checked>
+        <input class="form-check-input" type="checkbox" name="selected_categories" value="{{category}}" id="{{category}}" checked>
         <label class="form-check-label" for="{{category}}">{{category }}</label>
       </li>
       {% endfor %}
@@ -25,7 +25,7 @@
       </li>
       {% for category in all_categories %}
       <li class="list-inline-item" style="padding-right: 5px;">
-        <input class="form-check-input" type="checkbox" name="add_category" value="{{category}}" id="{{category}}">
+        <input class="form-check-input" type="checkbox" name="selected_categories" value="{{category}}" id="{{category}}">
         <label class="form-check-label" for="{{category}}">{{category }}</label>
       </li>
       {% endfor %}

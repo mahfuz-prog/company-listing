@@ -1,7 +1,8 @@
 import random
+from flaskapp import db
 from flaskapp.posts.utils import post_processor
 from flask import Blueprint, render_template, flash, redirect, url_for
-from flaskapp.posts.db_models import Post, PostCategories, PostCategoryAssignment
+from flaskapp.posts.db_models import Post, PostCategories, PostCategoryAssociation
 from flaskapp.posts.featured import featured_post
 
 posts = Blueprint('posts', __name__)
@@ -10,18 +11,28 @@ posts = Blueprint('posts', __name__)
 # all post
 @posts.route('/')
 def post():
-	posts = Post.query.all()
+	# Eager load author and categories to avoid N+1 in post_processor
+	posts = Post.query.options(
+		db.joinedload(Post.author),
+		db.selectinload(Post.categories)
+	).all()
+
 	posts = post_processor(posts)
-	cateories = PostCategories.query.all()
+	categories = PostCategories.query.all()
 	featured = featured_post
-	return render_template('posts/posts.html', title='All posts', posts=posts, cateories=cateories, featured=featured)
+	return render_template('posts/posts.html', title='All posts', posts=posts, categories=categories, featured=featured)
 
 
 # only featured post
 @posts.route('/featured-post/')
 def read_featured():
 	post = featured_post
-	other_posts = Post.query.limit(20).all()
+	# Eager load
+	other_posts = Post.query.options(
+		db.joinedload(Post.author),
+		db.selectinload(Post.categories)
+	).limit(20).all()
+	
 	other_posts = random.sample(other_posts, min(2, len(other_posts)))
 	return render_template('posts/featured_post.html', title=featured_post['title'], post=featured_post, other_posts=other_posts)
 
@@ -29,45 +40,54 @@ def read_featured():
 # single post
 @posts.route('/<title>')
 def read_post(title):
-	post = Post.query.filter_by(title=title).first()
-	title = title.replace('-', ' ').capitalize()
-	if post:
-		association_list = PostCategoryAssignment.query.filter_by(post_id=post.id).all()
-		categories = []
-		for association in association_list:
-			categories.append(PostCategories.query.get(association.category_id).category_name)
+	# Eager load
+	post = Post.query.options(
+		db.joinedload(Post.author),
+		db.selectinload(Post.categories)
+	).filter_by(title=title).first()
 
-		all_cateories = PostCategories.query.all()
-		all_cat_id = [x.id for x in all_cateories]
-		post_category = [x.category_id for x in association_list]
-		for id in all_cat_id:
-			if id not in post_category:
-				other_posts_assignment = PostCategoryAssignment.query.filter_by(category_id=id).limit(2).all()
-				other_posts = [Post.query.get(post.post_id) for post in other_posts_assignment]
-			else:
-				other_posts = None
-
-		return render_template('posts/single_post.html', title=title, post=post, categories=categories, other_posts=other_posts)
-	else:
+	if not post:
 		flash('This post does not exist!')
 		return redirect(url_for('posts.post'))
+
+	categories = [cat.category_name for cat in post.categories]
+	other_posts = []
+
+	# query other post from the same category except current post
+	current_post_category_ids = [cat.id for cat in post.categories]
+	# Eager load
+	other_posts = Post.query.options(
+		db.joinedload(Post.author),
+		db.selectinload(Post.categories)
+	).join(PostCategoryAssociation).filter(
+		PostCategoryAssociation.category_id.in_(current_post_category_ids),
+		# Exclude the current post
+		Post.id != post.id 
+	).distinct().limit(3).all()
+
+	return render_template('posts/single_post.html', title=title, post=post, categories=categories, other_posts=other_posts)
 
 
 # blog by category
 @posts.route('/category/<category>/')
 def post_category_view(category):
 	cat = PostCategories.query.filter_by(category_name=category).first()
-	if cat:
-		association_list = PostCategoryAssignment.query.filter_by(category_id=cat.id).all()
-		posts = []
-		for item in association_list:
-			posts.append(Post.query.get(item.post_id))
 
-		posts = post_processor(posts)
-		cateories = PostCategories.query.all()
-		title=category.replace('-', ' ').capitalize()
-		featured = featured_post
-		return render_template('posts/posts.html', title=title, posts=posts, cateories=cateories, featured=featured)
-	else:
+	if not cat:
 		flash('Category dose not exist.')
 		return redirect(url_for('posts.post'))
+
+	# Eager load
+	posts_in_category = Post.query.options(
+		db.joinedload(Post.author),
+		db.selectinload(Post.categories)
+	).join(Post.categories).filter(
+		PostCategories.id == cat.id
+	).distinct().order_by(Post.date_posted.desc()).all()
+
+	posts = post_processor(posts_in_category)
+	categories = PostCategories.query.all()
+	title = category.replace('-', ' ').capitalize()
+	featured = featured_post
+
+	return render_template('posts/posts.html', title=title, posts=posts, categories=categories, featured=featured)

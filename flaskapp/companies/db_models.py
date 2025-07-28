@@ -14,6 +14,15 @@ class Company(db.Model):
 	logo = db.Column(db.String(16), unique=True)
 	headquarter = db.Column(db.String(60))
 
+	categories = db.relationship(
+		'ServiceCategory',
+		secondary='service_category_associations',
+		backref=db.backref('companies', lazy=True),
+		# Default lazy loading, will be overridden by eager loading options like selectinload
+		lazy=True,
+		cascade="all, delete"
+    )
+
 	def __repr__(self):
 		return f'<{self.company_name} | {self.services}| {self.locations} | {self.social_links} | \
 		{self.company_website} | {self.logo} | {self.headquarter}>'
@@ -30,6 +39,7 @@ class ServiceCategory(db.Model):
 		return f'<{self.category}>'
 
 
+# association table
 class ServiceCategoryAssociation(db.Model):
 	__tablename__ = 'service_category_associations'
 

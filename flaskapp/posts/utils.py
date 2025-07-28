@@ -1,12 +1,10 @@
-from flaskapp.posts.db_models import PostCategories, PostCategoryAssignment
-def post_processor(lst):
+from flaskapp.posts.db_models import PostCategories, PostCategoryAssociation
+def post_processor(posts_lst):
 	posts = []
-	for item in lst:
-		assignment_cat = PostCategoryAssignment.query.filter_by(post_id=item.id).all()
-		categoris = []
-		for cat in assignment_cat:
-			category = PostCategories.query.get(cat.category_id).category_name
-			categoris.append(category)
+	for item in posts_lst:
+		# 'item.author' is already loaded due to eager loading
+		# 'item.categories' is already loaded due to eager loading
+		categories = [cat.category_name for cat in item.categories]
 
 		x = {
 			'id' : item.id,
@@ -17,7 +15,7 @@ def post_processor(lst):
 			'date_posted': item.date_posted,
 			'user_id': item.user_id,
 			'author' : item.author.username,
-			'categories' : categoris
+			'categories' : categories
 		}
 
 		posts.append(x)

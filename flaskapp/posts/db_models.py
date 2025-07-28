@@ -12,6 +12,15 @@ class Post(db.Model):
 	date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+	categories = db.relationship(
+		'PostCategories',
+		secondary='post_cat_assignment',
+		backref=db.backref('posts', lazy=True),
+		# Default lazy loading, will be overridden by eager loading options like selectinload
+		lazy=True,
+		cascade="all, delete"
+	)
+
 	def __repr__(self):
 		return f'<Title: {self.title} | Date: {self.date_posted}>'
 
@@ -26,7 +35,7 @@ class PostCategories(db.Model):
 		return f'<category: {self.category_name}>'
 
 
-class PostCategoryAssignment(db.Model):
+class PostCategoryAssociation(db.Model):
 	__tablename__ = 'post_cat_assignment'
 
 	post_id = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key=True)
