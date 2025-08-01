@@ -1,7 +1,7 @@
 # Company Listing Webapp
 
 ## High-Level Architecture
-<img width="900" height="1494" alt="company-listing" src="https://github.com/user-attachments/assets/754565e0-6777-4e8f-9207-31127d16a345" />
+<img width="900" height="1494" alt="company-listing" src="https://github.com/user-attachments/assets/c70adf15-bd37-4cb0-b047-6afe9c685536" />
 
 ## Overview
 
