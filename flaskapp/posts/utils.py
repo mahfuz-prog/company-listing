@@ -1,4 +1,3 @@
-from flaskapp.posts.db_models import PostCategories, PostCategoryAssociation
 def post_processor(posts_lst):
 	posts = []
 	for item in posts_lst:

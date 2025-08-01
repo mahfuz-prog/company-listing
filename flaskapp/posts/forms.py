@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from flaskapp.posts.db_models import Post, PostCategories
+from flaskapp.posts.db_models import Post, PostCategory
 from wtforms.validators import DataRequired, Length, ValidationError
 from wtforms import StringField, TextAreaField, SubmitField, BooleanField
 
@@ -75,7 +75,7 @@ class NewCategory(FlaskForm):
 
 	def validate_category_name(self, category_name):
 		cat = category_name.data.replace(' ', '-').lower()
-		cat = PostCategories.query.filter_by(category_name=cat).first()
+		cat = PostCategory.query.filter_by(category_name=cat).first()
 
 		if cat:
 			raise ValidationError('Category already exist')
@@ -87,7 +87,7 @@ class DeleteCategory(FlaskForm):
 
 	def validate_category_name(self, category_name):
 		cat = category_name.data.replace(' ', '-').lower()
-		cat = PostCategories.query.filter_by(category_name=cat).first()
+		cat = PostCategory.query.filter_by(category_name=cat).first()
 
 		if not cat:
 			raise ValidationError('Category does not exist')

@@ -13,12 +13,11 @@ class Post(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 	categories = db.relationship(
-		'PostCategories',
-		secondary='post_cat_assignment',
-		backref=db.backref('posts', lazy=True),
+		'PostCategory',
+		secondary='post_cat_associations',
+		backref=db.backref('posts', lazy=True, cascade="all, delete"),
 		# Default lazy loading, will be overridden by eager loading options like selectinload
-		lazy=True,
-		cascade="all, delete"
+		lazy=True
 	)
 
 	def __repr__(self):
@@ -26,7 +25,7 @@ class Post(db.Model):
 
 
 # categories for post
-class PostCategories(db.Model):
+class PostCategory(db.Model):
 	__tablename__ = 'post_categories'
 	id = db.Column(db.Integer, primary_key=True)
 	category_name = db.Column(db.String(50), unique=True, nullable=False)
@@ -36,7 +35,7 @@ class PostCategories(db.Model):
 
 
 class PostCategoryAssociation(db.Model):
-	__tablename__ = 'post_cat_assignment'
+	__tablename__ = 'post_cat_associations'
 
 	post_id = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key=True)
 	category_id = db.Column(db.Integer, db.ForeignKey('post_categories.id'), primary_key=True)

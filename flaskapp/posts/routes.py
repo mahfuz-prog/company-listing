@@ -2,7 +2,7 @@ import random
 from flaskapp import db
 from flaskapp.posts.utils import post_processor
 from flask import Blueprint, render_template, flash, redirect, url_for
-from flaskapp.posts.db_models import Post, PostCategories, PostCategoryAssociation
+from flaskapp.posts.db_models import Post, PostCategory, PostCategoryAssociation
 from flaskapp.posts.featured import featured_post
 
 posts = Blueprint('posts', __name__)
@@ -18,7 +18,7 @@ def post():
 	).all()
 
 	posts = post_processor(posts)
-	categories = PostCategories.query.all()
+	categories = PostCategory.query.all()
 	featured = featured_post
 	return render_template('posts/posts.html', title='All posts', posts=posts, categories=categories, featured=featured)
 
@@ -71,7 +71,7 @@ def read_post(title):
 # blog by category
 @posts.route('/category/<category>/')
 def post_category_view(category):
-	cat = PostCategories.query.filter_by(category_name=category).first()
+	cat = PostCategory.query.filter_by(category_name=category).first()
 
 	if not cat:
 		flash('Category dose not exist.')
@@ -82,11 +82,11 @@ def post_category_view(category):
 		db.joinedload(Post.author),
 		db.selectinload(Post.categories)
 	).join(Post.categories).filter(
-		PostCategories.id == cat.id
+		PostCategory.id == cat.id
 	).distinct().order_by(Post.date_posted.desc()).all()
 
 	posts = post_processor(posts_in_category)
-	categories = PostCategories.query.all()
+	categories = PostCategory.query.all()
 	title = category.replace('-', ' ').capitalize()
 	featured = featured_post
 

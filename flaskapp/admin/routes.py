@@ -4,7 +4,7 @@ from flask_login import current_user
 from flaskapp.companies.forms import AddCompany
 from flaskapp.admin.utils import save_img, admin_required
 from flaskapp.posts.forms import NewPost, NewCategory, DeleteCategory, EditPost
-from flaskapp.posts.db_models import Post, PostCategories, PostCategoryAssociation
+from flaskapp.posts.db_models import Post, PostCategory, PostCategoryAssociation
 from flaskapp.companies.db_models import Company, ServiceCategory, ServiceCategoryAssociation
 from flask import Blueprint, render_template, redirect, request, flash, url_for, current_app, abort
 from flaskapp.companies.utils import all_category
@@ -31,7 +31,7 @@ def all_posts():
 @admin_required
 def new_post():
 	form = NewPost()
-	categories = PostCategories.query.all()
+	categories = PostCategory.query.all()
 	if request.method == 'POST' and form.validate_on_submit():
 		selected_cat = request.form.getlist('option')
 
@@ -45,8 +45,8 @@ def new_post():
 		db.session.commit()
 
 		# Get category objects corresponding to the names
-		selected_category_objects = PostCategories.query.filter(
-			PostCategories.category_name.in_(selected_cat)
+		selected_category_objects = PostCategory.query.filter(
+			PostCategory.category_name.in_(selected_cat)
 		).all()
 
 		# create relationship
@@ -91,8 +91,8 @@ def edit_post(post_id):
 		existing_category_objects = set(post.categories)
 
 		# Get category objects corresponding to the names submitted in the form
-		submitted_category_objects = set(PostCategories.query.filter(
-			PostCategories.category_name.in_(selected_category_names)).all())
+		submitted_category_objects = set(PostCategory.query.filter(
+			PostCategory.category_name.in_(selected_category_names)).all())
 
 		# Categories to add: in submitted but not in existing
 		to_add = submitted_category_objects - existing_category_objects
@@ -115,7 +115,7 @@ def edit_post(post_id):
 	# handle get request
 	# GET current post category
 	post_categories = [cat.category_name for cat in post.categories]
-	all_category_names = [cat.category_name for cat in PostCategories.query.all()]
+	all_category_names = [cat.category_name for cat in PostCategory.query.all()]
 	categories = [name for name in all_category_names if name not in post_categories]
 	
 	# set data to form
@@ -134,13 +134,13 @@ def edit_post(post_id):
 def post_categories():
 	form_add = NewCategory()
 	form_delete = DeleteCategory()
-	categories = PostCategories.query.all()
+	categories = PostCategory.query.all()
 
 	# create new category
 	if request.method == 'POST' and form_add.validate_on_submit():
 		if form_add.submit_add.data:
 			category_name = form_add.category_name.data.strip().replace(' ', '-').lower()
-			db.session.add(PostCategories(category_name=category_name))
+			db.session.add(PostCategory(category_name=category_name))
 			db.session.commit()
 			flash(f'{category_name} - added')
 			return redirect(url_for('admin.post_categories'))
@@ -149,7 +149,7 @@ def post_categories():
 	if request.method == 'POST' and form_delete.validate_on_submit():
 		if form_delete.submit_delete.data:
 			category_name = form_delete.category_name.data.strip().replace(' ', '-').lower()
-			category_to_delete = PostCategories.query.filter_by(category_name=category_name).first()
+			category_to_delete = PostCategory.query.filter_by(category_name=category_name).first()
 
 			db.session.query(PostCategoryAssociation).filter_by(
 				category_id=category_to_delete.id

@@ -17,10 +17,9 @@ class Company(db.Model):
 	categories = db.relationship(
 		'ServiceCategory',
 		secondary='service_category_associations',
-		backref=db.backref('companies', lazy=True),
+		backref=db.backref('companies', lazy=True, cascade="all, delete"),
 		# Default lazy loading, will be overridden by eager loading options like selectinload
 		lazy=True,
-		cascade="all, delete"
     )
 
 	def __repr__(self):
