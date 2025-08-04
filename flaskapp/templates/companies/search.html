@@ -17,7 +17,7 @@
   </div>
   <div class="col-md-9 comp-page-right search-right">
     <div class="row align-items-md-stretch">
-      <h2 class="mb-4">Searched for "{{ search_query }}": {{ total_counts }} results found</h2>
+      <h2 class="mb-4">Searched for "{{ search_query.replace("-", " ").capitalize() }}": {{ total_counts }} results found</h2>
       {% for company in companies %}
       <div class="mb-4 companies-card">
         <div class="h-100 p-4 bg-body-tertiary border rounded-3">
@@ -73,6 +73,33 @@
       </div>
       {% endfor %}
     </div>
+
+    <div class="d-flex justify-content-center pb-3 pt-3">
+      <ul class="pagination">
+        {% if pagination.has_prev %}
+        <li class="page-item active"><a class="page-link pagination-btn-background text-dark" href="{{ url_for('companies.search', q=search_query, page=pagination.prev_num) }}">Previous</a></li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+        {% for page in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
+        {% if page %}
+        {% if pagination.page == page %}
+        <li class="page-item active"><a class="page-link pagination-btn-background text-dark" href="{{ url_for('companies.search', q=search_query, page=page) }}"> {{ page }} </a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link text-dark" href="{{ url_for('companies.search', q=search_query, page=page) }}"> {{ page }} </a></li>
+        {% endif %}
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">...</span></li>
+        {% endif %}
+        {% endfor %}
+        {% if pagination.has_next %}
+        <li class="page-item active"><a class="page-link pagination-btn-background text-dark" href="{{ url_for('companies.search', q=search_query, page=pagination.next_num) }}">Next</a></li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+      </ul>
+    </div>
+
   </div>
 </div>
 {% endblock %}

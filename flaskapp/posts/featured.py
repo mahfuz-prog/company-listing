@@ -7,19 +7,7 @@ featured_post = {
 					second post from webwaymarkthis is second post from webwaymarkthis is second post 
 					from webwaymarkthis is second post from webwaymarkthis is second post from webwaymarkthis 
 					is second post from webwaymarkthis is second post from webwaymarkthis is second post from 
-					webwaymarkthis is second post from webwaymark
-
-					this is second post from webwaymarkthis is second post from webwaymarkthis is 
-					second post from webwaymarkthis is second post from webwaymarkthis is second post 
-					from webwaymarkthis is second post from webwaymarkthis is second post from webwaymarkthis 
-					is second post from webwaymarkthis is second post from webwaymarkthis is second post from 
-					webwaymarkthis is second post from webwaymark
-
-					this is second post from webwaymarkthis is second post from webwaymarkthis is 
-					second post from webwaymarkthis is second post from webwaymarkthis is second post 
-					from webwaymarkthis is second post from webwaymarkthis is second post from webwaymarkthis 
-					is second post from webwaymarkthis is second post from webwaymarkthis is second post from 
-					webwaymarkthis is second post from webwaymark''',
+					''',
 
 	'date_posted': 'May-20, 2024',
 	'author': 'Mahfuz',

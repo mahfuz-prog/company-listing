@@ -41,7 +41,6 @@ def sign_up():
 @users.route('/verify-email/<token>')
 def verify_email(token):
 	user = UnverifiedUser.verify_email_token(token, max_age=1200)
-	print(user)
 	if user:
 		verified_user = User(username=user.username, email=user.email, password=user.password)
 		# add the verified user in User

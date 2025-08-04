@@ -4,10 +4,10 @@ from flask_login import current_user
 from flaskapp.companies.forms import AddCompany
 from flaskapp.admin.utils import save_img, admin_required
 from flaskapp.posts.forms import NewPost, NewCategory, DeleteCategory, EditPost
+from flaskapp.companies.db_models import Company, ServiceCategory
 from flaskapp.posts.db_models import Post, PostCategory, PostCategoryAssociation
-from flaskapp.companies.db_models import Company, ServiceCategory, ServiceCategoryAssociation
 from flask import Blueprint, render_template, redirect, request, flash, url_for, current_app, abort
-from flaskapp.companies.utils import all_category
+
 
 admin = Blueprint('admin', __name__)
 
@@ -196,7 +196,6 @@ def add_company():
 
 		company = Company(
 			company_name = company_name,
-			services = f"{services}",
 			description = description,
 			locations = f'{locations}',
 			social_links = f'{social_links}',
@@ -206,21 +205,20 @@ def add_company():
 			)
 
 		db.session.add(company)
-		db.session.flush()
 
 		# Fetch all selected ServiceCategory objects in a single query
 		selected_category_objects = ServiceCategory.query.filter(
-			ServiceCategory.category.in_(selected_cat)
+			ServiceCategory.category_name.in_(selected_cat)
 		).all()
 
-		# Assign categories directly through the relationship property
-		for cat_obj in selected_category_objects:
-			company.categories.append(cat_obj)
+		company.categories = selected_category_objects
 
 		db.session.commit()
 		flash('New company added')
-		return redirect(url_for('admin.all_companies'))
-	return render_template('/admin/add_company.html', title="Add new company", form=form, categories=all_category)
+		return redirect(url_for('admin.add_company'))
+
+	all_categories = [c.category_name for c in ServiceCategory.query.all()]
+	return render_template('/admin/add_company.html', title="Add new company", form=form, categories=all_categories)
 
 
 # delete company
@@ -236,4 +234,4 @@ def delete_company(company_id):
 	db.session.commit()
 
 	flash(f'{title} company deleted')
-	return redirect(url_for('admin.all_companies'))
+	return redirect(url_for('admin.add_company'))

@@ -30,7 +30,7 @@
             <li><a href="{{ url_for('main.contact_us') }}" class="nav-link">Contact us</a></li>
           </ul>
           <div class="d-flex align-items-center">
-            <form class="w-100 me-3" role="search" action="{{ url_for('companies.search') }}" method="POST">
+            <form class="w-100 me-3" role="search" action="{{ url_for('companies.search_post_handler') }}" method="POST">
               <input type="search" class="form-control" placeholder="Search services" aria-label="Search" name='search'>
             </form>
             <div class="flex-shrink-0 dropdown">

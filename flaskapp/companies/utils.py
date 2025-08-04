@@ -1,15 +1,5 @@
 import ast
 
-all_category = ['metaverse-development', 'robotic-process-automation', 
-	'maintenance-and-support', 'mobile-app-development', 'animation-and-multimedia', 
-	'ar-and-vr-development', 'cloud-computing-services', 'web-hosting', 'bot-development', 
-	'implementation-services', 'artificial-intelligence', 'testing-services', 'iot-development', 'advertising', 
-	'engineering-services', 'devops', 'business-services', 'software-development', 
-	'app-designing-ui-ux', 'big-data-and-bi', 'web-development', 'game-development', 'ecommerce-development', 
-	'web-designing-ui-ux', 'writing-services', 'web3', 'blockchain-technology', 'digital-marketing', 
-	'progressive-web-app'
-]
-
 
 countries = ['Albania', 'Algeria', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Bahrain', 
 	'Bangladesh', 'Belarus', 'Belgium', 'Bermuda', 'Bolivia', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 
@@ -24,22 +14,23 @@ countries = ['Albania', 'Algeria', 'Argentina', 'Armenia', 'Australia', 'Austria
 	'UAE', 'Uganda', 'Ukraine', 'Uruguay', 'Uzbekistan', 'Venezuela', 'Vietnam']
 
 
-def company_processor(lst):
+def company_processor(company_lst):
 	companies = []
-	for item in lst:
-		services = ast.literal_eval(item.services)
-		locations = ast.literal_eval(item.locations)
-		social_links = ast.literal_eval(item.social_links)
+
+	for company in company_lst:
+		services = [c.category_name for c in company.categories]
+		locations = ast.literal_eval(company.locations)
+		social_links = ast.literal_eval(company.social_links)
 
 		x = {
-			'id' : item.id,
-			'company': item.company_name,
+			'id' : company.id,
+			'company': company.company_name,
 			'services': services,
 			'locations': locations,
 			'social_links': social_links,
-			'website' : item.company_website, 
-			'logo' : item.logo,
-			'headquater': item.headquarter
+			'website' : company.company_website, 
+			'logo' : company.logo,
+			'headquater': company.headquarter
 		}
 
 		companies.append(x)
