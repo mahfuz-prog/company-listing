@@ -1,7 +1,7 @@
 # Company Listing Webapp
 
 ## High-Level Architecture
-<img width="900" height="1494" alt="company-listing" src="https://github.com/user-attachments/assets/6f47d0a8-d232-4025-af7e-9b51000f4c62" />
+<img width="900" height="1494" alt="company-listing" src="https://github.com/user-attachments/assets/65943300-7c65-490c-9aa6-f471ed41e4c5" />
 
 ## Overview
 
@@ -368,4 +368,5 @@ sudo crontab -e
 # minutes hour day *(every month) *(day of the week) 
 30 4 1 * * sudo certbot renew --quiet
 ```
+
 
